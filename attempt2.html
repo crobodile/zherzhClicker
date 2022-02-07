@@ -1,0 +1,102 @@
+<! Ʒerʒ >
+<html>
+    
+<head>
+    <title>Ʒerʒ Clicker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <style>
+        .main{
+            margin:20px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+    
+<body class= "main">
+
+    
+    <h1>ƷerʒCoin: <span id="coinsDisplay">0</span></h1> 
+        <script>
+            var coins = 0;
+            function updateCoinsDisplay(){
+                income = miners;
+                
+            document.getElementById("minerCostDisplay").innerHTML = minerCost;
+                document.getElementById("minerDisplay").innerHTML = miners;
+                document.getElementById("upgradeCostDisplay").innerHTML = upgradeCost;
+                document.getElementById("clickValueDisplay").innerHTML = clickValue;
+                document.getElementById("incomeDisplay").innerHTML = income;
+               document.getElementById("coinsDisplay").innerHTML = coins;
+                if(coins<minerCost){
+                    document.getElementById("buyMinerButton").disabled = true;
+                } else{
+                    document.getElementById("buyMinerButton").disabled = false;
+                }
+                if(coins<upgradeCost){
+                    document.getElementById("buyUpgradeButton").disabled = true;
+                } else{
+                    document.getElementById("buyUpgradeButton").disabled = false;
+                }
+            }
+    
+        </script>
+    <p>
+        <button onclick="coinClick()">Click for ƷerʒCoin</button> <br><br>
+        <script>
+           
+            function coinClick(){
+                coins += clickValue;
+                updateCoinsDisplay();
+            }
+        </script>
+    
+     
+        <b>Upgrades</b><br>
+        Income: <span id="incomeDisplay">0</span> Per Second<br>
+            <script>
+                var income = 1;
+                
+                function tick(){
+                    coins += Math.floor(income);
+                    updateCoinsDisplay();
+                }
+                setInterval(tick,1000);
+            </script>
+        
+        <button id= "buyMinerButton" onclick="buyMiner()">Buy Miner</button> Miners: <span id="minerDisplay">0</span><br>
+        Cost: <span id="minerCostDisplay">10</span> <br><br>
+        <script>
+            var minerCost = 15;
+            var miners = 0
+            function buyMiner(){
+                coins -= minerCost;
+                miners ++;
+                minerCost +=10;
+                updateCoinsDisplay();
+            }
+        </script>
+        
+        Ʒerʒ per Click: <span id="clickValueDisplay">1</span>
+        
+         <button id= "buyUpgradeButton" onclick="buyUpgrade()">Buy Click Upgrade</button><br>
+        Cost: <span id="upgradeCostDisplay">10</span> <br><br>
+        <script>
+            var clickValue= 1;
+            var upgradeCost = 15;
+            function buyUpgrade(){
+                coins -= upgradeCost;
+                clickValue ++;
+               upgradeCost +=10;
+                updateCoinsDisplay();
+            }
+        </script>
+        
+        this is where you will buy nft and they will go up and down in value but no programmo
+        
+        <script>updateCoinsDisplay()</script>
+    </p>
+    
+</body>
+    
+</html>
