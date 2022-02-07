@@ -1,4 +1,4 @@
-<! Ʒerʒ i need this comment at the top so i can copy and paste Ʒerʒ when i need it>
+<!--- Ʒerʒ i need this comment at the top so i can copy and paste Ʒerʒ when i need it--->
 <html>
     
 <head>
@@ -10,24 +10,53 @@
             margin:20px;
             line-height: 1.4;
         }
+        .console{
+            background-color: black;
+            color: white;
+            border-style: double;
+        }
     </style>
+
 </head>
     
-<body class= "main">
+<body id = "bg" class= "main">
 
+    <p class = "console"> 
     
+    <span id = "consoleMsg4"> &nbsp;</span><br>
+    <span id = "consoleMsg3"> &nbsp;</span><br>
+    <span id = "consoleMsg2"> &nbsp;</span><br>
+    <span id = "consoleMsg1"> &nbsp;> Very Original Game!</span><br>
+        
+    <script>
+    function consoleMsg(msg){
+        document.getElementById("consoleMsg4").innerHTML =  document.getElementById("consoleMsg3").innerHTML;
+         document.getElementById("consoleMsg3").innerHTML =  document.getElementById("consoleMsg2").innerHTML;
+         document.getElementById("consoleMsg2").innerHTML =  document.getElementById("consoleMsg1").innerHTML;
+         document.getElementById("consoleMsg1").innerHTML =  msg;
+    }    
+    </script>
+    
+    </p>
     <h1>ƷerʒCoin: <span id="coinsDisplay">0</span></h1> 
         <script>
             var coins = 0;
+            var totalCoins = 0;
+            var checkpoint = 0;
+            var checkpoints = [50,100,500,1500,3000,10000,50000,100000,250000,500000,1000000];
+            var tickpoint = 0;
+            var tickpoints = [15,30,60,90,120,150,180];
+            var tickpointMsgs = ["&nbsp;> Miners give you 1 ƷerʒCoin per second automatically by default.", "&nbsp;> Remember to always invest in ƷerʒCoin!", "&nbsp;> do not click the die button", "&nbsp;> Rubio's Combs NFT will only go up!", "&nbsp;> You have been collecting ƷerʒCoin for 2 minutes", "&nbsp;> hi", "&nbsp;> hold control and type WOW for a surprise"];
             function updateCoinsDisplay(){
-                income = miners;
+
                 
-            document.getElementById("minerCostDisplay").innerHTML = minerCost;
-                document.getElementById("minerDisplay").innerHTML = miners;
-                document.getElementById("upgradeCostDisplay").innerHTML = upgradeCost;
-                document.getElementById("clickValueDisplay").innerHTML = clickValue;
-                document.getElementById("incomeDisplay").innerHTML = income;
+                
+                
+                
+                
                document.getElementById("coinsDisplay").innerHTML = coins;
+                
+                <!--- JUST USE A LIST FOR THIS LOL IM TOO LAZY --->
                 if(coins<minerCost){
                     document.getElementById("buyMinerButton").disabled = true;
                 } else{
@@ -38,6 +67,30 @@
                 } else{
                     document.getElementById("buyUpgradeButton").disabled = false;
                 }
+                if(coins<5000){
+                    document.getElementById("trollButton").disabled = true;
+                } else{
+                    document.getElementById("trollButton").disabled = false;
+                }
+                if(coins<47){
+                    document.getElementById("dieButton").disabled = true;
+                } else{
+                    document.getElementById("dieButton").disabled = false;
+                }
+                if(coins<upgradeMinerCost){
+                    document.getElementById("upgradeMinerButton").disabled = true;
+                } else{
+                    document.getElementById("upgradeMinerButton").disabled = false;
+                }
+                
+                if(totalCoins >= checkpoints[checkpoint]){
+                    consoleMsg("&nbsp;> Reached " + checkpoints[checkpoint] + " Total ƷerʒCoin!");
+                    checkpoint++;
+                }
+                if(tickcount >= tickpoints[tickpoint]){
+                    consoleMsg(tickpointMsgs[tickpoint]);
+                    tickpoint++;
+                }
             }
     
         </script>
@@ -46,41 +99,70 @@
         <script>
            
             function coinClick(){
-                coins += clickValue;
+                giveCoins(clickValue);
                 updateCoinsDisplay();
+            }
+            function giveCoins(num){
+                coins += num;
+                totalCoins += num;
             }
         </script>
     
      
-        <b>Upgrades</b><br>
+        <b>Miners</b><br>
         Income: <span id="incomeDisplay">0</span> Per Second<br>
             <script>
-                var income = 1;
-                
+                var income = 0;
+                var tickcount = 0;
                 function tick(){
-                    coins += Math.floor(income);
+                    tickcount++;
+                     income = miners * minerValue; 
+                    document.getElementById("incomeDisplay").innerHTML = income;
+                    giveCoins(Math.floor(income));
                     updateCoinsDisplay();
                 }
                 setInterval(tick,1000);
             </script>
         
         <button id= "buyMinerButton" onclick="buyMiner()">Buy Miner</button> Miners: <span id="minerDisplay">0</span><br>
-        Cost: <span id="minerCostDisplay">10</span> <br><br>
+        Cost: <span id="minerCostDisplay">15</span> <br><br>
         <script>
             var minerCost = 15;
             var miners = 0
             function buyMiner(){
                 coins -= minerCost;
                 miners ++;
-                minerCost +=10;
+                document.getElementById("minerDisplay").innerHTML = miners;
+                minerCost +=1;
+                document.getElementById("minerCostDisplay").innerHTML = minerCost;
+                if(coins<minerCost){
+                document.getElementById("buyMinerButton").disabled = true;
+                }
                 updateCoinsDisplay();
             }
         </script>
+        <button id= "upgradeMinerButton" onclick ="upgradeMiner()">Upgrade Miners</button> Multiplier: <span id="minerValueDisplay">1</span><br>
+        Cost: <span id="upgradeMinerCostDisplay">300</span><br><br>
+        <script>
+            var minerValue = 1;
+            var upgradeMinerCost = 300;
+            function upgradeMiner(){
+                coins -= upgradeMinerCost
+                minerValue ++;
+                upgradeMinerCost *= 2;
+                document.getElementById("minerValueDisplay").innerHTML = minerValue;
+                document.getElementById("upgradeMinerCostDisplay").innerHTML = upgradeMinerCost;
+                if(coins<upgradeMinerCost){
+                document.getElementById("upgradeMinerButton").disabled = true;
+                }
+            }
+        </script>
         
-        Ʒerʒ per Click: <span id="clickValueDisplay">1</span>
+        <b>Click Upgrades</b><br>
         
-         <button id= "buyUpgradeButton" onclick="buyUpgrade()">Buy Click Upgrade</button><br>
-        Cost: <span id="upgradeCostDisplay">10</span> <br><br>
+        
+         <button id= "buyUpgradeButton" onclick="buyUpgrade()">Buy Click Upgrade</button>Ʒerʒ per Click: <span id="clickValueDisplay">1</span><br>
+        Cost: <span id="upgradeCostDisplay">15</span> <br><br>
         <script>
             var clickValue= 1;
             var upgradeCost = 15;
@@ -88,11 +170,61 @@
                 coins -= upgradeCost;
                 clickValue ++;
                upgradeCost +=10;
+                document.getElementById("upgradeCostDisplay").innerHTML = upgradeCost;
+                document.getElementById("clickValueDisplay").innerHTML = clickValue;
+                if(coins<upgradeCost){
+                document.getElementById("buyUpgradeButton").disabled = true;
+                }
                 updateCoinsDisplay();
             }
         </script>
         
-        this is where you will buy nft and they will go up and down in value but no programmo
+        <b>Art Gallery</b><br>
+        
+        <img id = "nft1" style="width:150px;height:150px;" src=https://media.discordapp.net/attachments/938194743383441411/938488788185911368/combs.png><br>
+        <button id = "trollButton" onclick= "trollButtonFn()" > Click to Purchase Rubio's Combs NFT</button> <br>
+         Cost = 5000 ƷerʒCoin <br><br>
+                
+        <script> 
+            function trollButtonFn(){
+                coins -= 5000;
+                if(coins<5000){
+                document.getElementById("trollButton").disabled = true;
+                }
+                document.getElementById("trollButton").innerHTML = "sike you cant";
+                document.getElementById("nft1").src = "https://media.discordapp.net/attachments/938194743383441411/938655609685966948/unknown.png";
+                
+            }
+        </script>
+        
+        <br style = "line-height: 100"> 
+
+        <b>Other</b><br>
+        <button id = dieButton onclick="dieButton()">click to die</button><br>
+        Cost = 47 ƷerʒCoin and your eyesight (genuine warning this gave me a headache look away)
+        
+        <script>
+        var die = 0;
+        function dieButton(){
+            coins -= 47;
+            die = 0;
+            var trollLoop = setInterval(troll,10);
+        }
+            
+        function troll(){
+            die++;
+            if(die >= 100){
+                 document.getElementById("bg").style.backgroundColor = "white";
+                clearInterval(trollLoop);
+            }else if(die%2 == 1){
+                document.getElementById("bg").style.backgroundColor = "red";
+            }else{
+                document.getElementById("bg").style.backgroundColor = "blue";
+            }
+        }
+        </script>
+        
+        
         
         <script>updateCoinsDisplay()</script>
     </p>
