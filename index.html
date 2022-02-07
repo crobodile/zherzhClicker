@@ -208,6 +208,10 @@
         function dieButton(){
             coins -= 47;
             die = 0;
+            clearInterval(trollLoop);
+            if(coins<47){
+                document.getElementById("trollButton").disabled = true;
+                }
             var trollLoop = setInterval(troll,10);
         }
             
