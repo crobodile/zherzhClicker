@@ -84,12 +84,25 @@
                 }
                 
                 if(totalCoins >= checkpoints[checkpoint]){
-                    consoleMsg("&nbsp;> Reached " + checkpoints[checkpoint] + " Total ƷerʒCoin!");
+                    consoleMsg("&nbsp;> Reached " + checkpoints[checkpoint] + " Total ƷerʒCoin in " +secondsToTime(tick)+ "!");
                     checkpoint++;
                 }
                 if(tickcount >= tickpoints[tickpoint]){
                     consoleMsg(tickpointMsgs[tickpoint]);
                     tickpoint++;
+                }
+            }
+            function secondsToTime(seconds){
+                var minutes = Math.floor(seconds/60);
+                var hours = Math.floor(minutes/60);
+                minutes = minutes%60;
+                var second = seconds%60;
+                if(hours>0){
+                    return(hours + " hours " + minutes + " minutes and "+ second +" seconds");
+                } else if(minutes>0){
+                    return(minutes + " minutes and "+ second +" seconds");
+                }else{
+                    return(second +" seconds");
                 }
             }
     
