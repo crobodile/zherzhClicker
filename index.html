@@ -249,8 +249,8 @@
             
             function randomFn(min,max){
                 var range = Math.floor(max+1) - Math.floor(min);
-                var output = Math.floor(Math.random(1)*range)
-                output += output*(totalCoins/10000)
+                var output = Math.floor(Math.random(1)*range + min);
+                output += output*(totalCoins/10000);
                 output = Math.floor(output);
                 return(output);
             }
