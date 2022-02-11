@@ -189,7 +189,7 @@
                 coins -= minerCost;
                 miners ++;
                 document.getElementById("minerDisplay").innerHTML = miners;
-                minerCost +=1;
+                minerCost +=3;
                 document.getElementById("minerCostDisplay").innerHTML = minerCost;
                 if(coins<minerCost){
                 document.getElementById("buyMinerButton").disabled = true;
@@ -250,7 +250,7 @@
             function randomFn(min,max){
                 var range = Math.floor(max+1) - Math.floor(min);
                 var output = Math.floor(Math.random(1)*range + min);
-                output += output*(totalCoins/10000);
+                output += output*(totalCoins/50000);
                 output = Math.floor(output);
                 return(output);
             }
