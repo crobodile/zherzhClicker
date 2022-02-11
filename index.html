@@ -1,6 +1,6 @@
 <!--- Ʒerʒ i need this comment at the top so i can copy and paste Ʒerʒ when i need it--->
+<!DOCTYPE html>
 <html>
-    
 <head>
     <title>Ʒerʒ Clicker</title>
     <a href = "https://crobodile.github.io/home" style="color:gray">Another awesome application</a>
@@ -8,7 +8,7 @@
     
     <style>
         .main{
-            margin:20px;
+            margin:30px;
             line-height: 1.4;
         }
         .console{
@@ -21,13 +21,13 @@
 </head>
     
 <body id = "bg" class= "main">
-
-    <p class = "console"> 
+    
+<div id="consolediv" class = "console">
     
     <span id = "consoleMsg4"> &nbsp;</span><br>
     <span id = "consoleMsg3"> &nbsp;</span><br>
-    <span id = "consoleMsg2"> &nbsp;</span><br>
-    <span id = "consoleMsg1"> &nbsp;> Very Original Game!</span><br>
+    <span id = "consoleMsg2"> &nbsp;> update 2/11: nft does something, hidden sections unlocked after coin threshholds, removed die button, made code even more conveluted</span><br>
+    <span id = "consoleMsg1"> &nbsp;> send me cool images for me to add as next nft🥶🥶🥶 (they must go hard)</span><br>
         
     <script>
     function consoleMsg(msg){
@@ -38,16 +38,24 @@
     }    
     </script>
     
-    </p>
+   
+    
+</div>
+    
+    
+<div id = "coinsdiv">
     <h1>ƷerʒCoin: <span id="coinsDisplay">0</span></h1> 
         <script>
+            var nfts = [0,0];
+            var nftprices = [5000,0];
             var coins = 0;
             var totalCoins = 0;
             var checkpoint = 0;
-            var checkpoints = [50,100,500,1500,3000,10000,50000,100000,250000,500000,1000000];
+            var checkpoints = [15,50,100,500,1500,3000,10000,50000,100000,250000,500000,1000000];
+            var checkpointMsgs = ["Unlocked Click Upgrades.","Unlocked Miners.","","","","Unlocked Art Gallery","","","","","","","","","","","",""]
             var tickpoint = 0;
-            var tickpoints = [15,30,60,90,120,150,180];
-            var tickpointMsgs = ["&nbsp;> Miners give you 1 ƷerʒCoin per second automatically by default.", "&nbsp;> Remember to always invest in ƷerʒCoin!", "&nbsp;> do not click the die button", "&nbsp;> Rubio's Combs NFT will only go up!", "&nbsp;> You have been collecting ƷerʒCoin for 2 minutes", "&nbsp;> hi", "&nbsp;> hold control and type WOW for a surprise"];
+            var tickpoints = [15,60,120,150,240,360,600,3600];
+            var tickpointMsgs = ["&nbsp;> i learn how to use html 2 days ago idk what im doing 😎", "&nbsp;> ƷerʒCoin up 0.03 cents!! 🤑🤑", "&nbsp;> the die button has died", "&nbsp;> im actually typing all these messages to you right now look behind you", "&nbsp;> Rubio's Combs NFT will only go up! most of the time.", "&nbsp;> You have been collecting ƷerʒCoin for 6 minutes", "&nbsp;> hi", "&nbsp;> a whole hour???"];
             function updateCoinsDisplay(){
 
                 
@@ -68,16 +76,17 @@
                 } else{
                     document.getElementById("buyUpgradeButton").disabled = false;
                 }
-                if(coins<5000){
-                    document.getElementById("trollButton").disabled = true;
+                if(coins < nftprices[0] || nfts[0] == 1){
+                    document.getElementById("nft1Button").disabled = true;
                 } else{
-                    document.getElementById("trollButton").disabled = false;
+                    document.getElementById("nft1Button").disabled = false;
                 }
-                if(coins<47){
-                    document.getElementById("dieButton").disabled = true;
+                if(nfts[0] == 0){
+                    document.getElementById("sellnft1Button").disabled = true;
                 } else{
-                    document.getElementById("dieButton").disabled = false;
+                    document.getElementById("sellnft1Button").disabled = false;
                 }
+                
                 if(coins<upgradeMinerCost){
                     document.getElementById("upgradeMinerButton").disabled = true;
                 } else{
@@ -85,8 +94,18 @@
                 }
                 
                 if(totalCoins >= checkpoints[checkpoint]){
-                    consoleMsg("&nbsp;> Reached " + checkpoints[checkpoint] + " Total ƷerʒCoin in " +secondsToTime(tickcount)+ "!");
+                    consoleMsg("&nbsp;> Reached " + checkpoints[checkpoint] + " Total ƷerʒCoin in " +secondsToTime(tickcount)+ "! " + checkpointMsgs[checkpoint]);
+                    
+                    if(checkpoint == 0){
+                        document.getElementById("clickdiv").style.display = "block";
+                    } else if (checkpoint ==1){
+                        document.getElementById("minersdiv").style.display = "block";
+                    }else if (checkpoint ==5){
+                        document.getElementById("gallerydiv").style.display = "block";
+                        startEconomy();
+                    }
                     checkpoint++;
+                    
                 }
                 if(tickcount >= tickpoints[tickpoint]){
                     consoleMsg(tickpointMsgs[tickpoint]);
@@ -121,9 +140,32 @@
                 totalCoins += num;
             }
         </script>
-    
-     
-        <b>Miners</b><br>
+    </div>        
+    <div id= "clickdiv" style="display:none">
+        <hr><b>Click Upgrades</b><br>
+        
+        
+         <button id= "buyUpgradeButton" onclick="buyUpgrade()">Buy Click Upgrade</button> Ʒerʒ per Click: <span id="clickValueDisplay">1</span><br>
+        Cost: <span id="upgradeCostDisplay">15</span> <br><br>
+        <script>
+            var clickValue= 1;
+            var upgradeCost = 15;
+            function buyUpgrade(){
+                coins -= upgradeCost;
+                clickValue ++;
+               upgradeCost +=10;
+                document.getElementById("upgradeCostDisplay").innerHTML = upgradeCost;
+                document.getElementById("clickValueDisplay").innerHTML = clickValue;
+                if(coins<upgradeCost){
+                document.getElementById("buyUpgradeButton").disabled = true;
+                }
+                updateCoinsDisplay();
+            }
+        </script>
+    </div>
+        
+    <div id=minersdiv style="display:none">
+        <hr><b>Miners</b><br>
         Income: <span id="incomeDisplay">0</span> Per Second<br>
             <script>
                 var income = 0;
@@ -171,77 +213,87 @@
                 }
             }
         </script>
+    </div>
+    
+    
+    <div id=gallerydiv style="display:none">
+        <hr><b>Art Gallery</b><br>
         
-        <b>Click Upgrades</b><br>
-        
-        
-         <button id= "buyUpgradeButton" onclick="buyUpgrade()">Buy Click Upgrade</button>Ʒerʒ per Click: <span id="clickValueDisplay">1</span><br>
-        Cost: <span id="upgradeCostDisplay">15</span> <br><br>
-        <script>
-            var clickValue= 1;
-            var upgradeCost = 15;
-            function buyUpgrade(){
-                coins -= upgradeCost;
-                clickValue ++;
-               upgradeCost +=10;
-                document.getElementById("upgradeCostDisplay").innerHTML = upgradeCost;
-                document.getElementById("clickValueDisplay").innerHTML = clickValue;
-                if(coins<upgradeCost){
-                document.getElementById("buyUpgradeButton").disabled = true;
-                }
-                updateCoinsDisplay();
-            }
-        </script>
-        
-        <b>Art Gallery</b><br>
-        
-        <img id = "nft1" style="width:150px;height:150px;" src=https://media.discordapp.net/attachments/938194743383441411/938488788185911368/combs.png><br>
-        <button id = "trollButton" onclick= "trollButtonFn()" > Click to Purchase Rubio's Combs NFT</button> <br>
-         Cost = 5000 ƷerʒCoin <br><br>
+        <img id = "nft1" style="width:150px;height:150px;border: 5px solid red" src=https://media.discordapp.net/attachments/938194743383441411/938488788185911368/combs.png><br>
+        Value = <span id=nftprice1>n/a</span> ƷerʒCoin <br>
+        <button id = "nft1Button" onclick= "buyNFT1()" > Click to Purchase Rubio's Combs NFT</button> <br>
+        <button id = "sellnft1Button" onclick = "sellNFT1()"> Click to Sell Rubio's Combs NFT</button>
+        <br>
                 
         <script> 
-            function trollButtonFn(){
-                coins -= 5000;
-                if(coins<5000){
-                document.getElementById("trollButton").disabled = true;
+            
+            function startEconomy(){
+                nftprices[0] = 5000;
+                document.getElementById("nftprice1").innerHTML = nftprices[0];
+                
+            }
+            setInterval(economy,3000);
+            
+            function economy(){
+                nftprices[0] += randomFn(-50,100);
+                if (nftprices[0]<0){
+                    nftprices[0] = 0;
                 }
-                document.getElementById("trollButton").innerHTML = "sike you cant";
-                document.getElementById("nft1").src = "https://media.discordapp.net/attachments/938194743383441411/938655609685966948/unknown.png";
+                document.getElementById("nftprice1").innerHTML = nftprices[0];
+                if(coins<nftprices[0] || nfts[0] == 1){
+                    document.getElementById("nft1Button").disabled = true;
+                } else{
+                    document.getElementById("nft1Button").disabled = false;
+                }
+            }
+            
+            function randomFn(min,max){
+                var range = Math.floor(max+1) - Math.floor(min);
+                var output = Math.floor(Math.random(1)*range)
+                output += output*(totalCoins/10000)
+                output = Math.floor(output);
+                return(output);
+            }
+            function sellNFT1(){
+                coins += nftprices[0];
+                totalCoins += nftprices[0] - lastboughtfor;
+                document.getElementById("nft1").style.border = "5px solid red";
+                nfts[0]=0;
+            }
+                var lastboughtfor = 0;
+            function buyNFT1(){
+                coins -= nftprices[0];
+                lastboughtfor = nftprices[0];
+                nfts[0]=1;
+                document.getElementById("nft1").style.border = "5px solid lime";
+                document.getElementById("nft1Button").disabled = true;
+            
                 
             }
         </script>
-        
-        <br style = "line-height: 100"> 
-
-        <b>Other</b><br>
-        <button id = dieButton onclick="dieButton()">click to die</button><br>
-        Cost = 47 ƷerʒCoin and your eyesight (genuine warning this gave me a headache look away)
-        
-        <script>
-        var die = 0;
-        function dieButton(){
-            coins -= 47;
-            die = 0;
-            clearInterval(trollLoop);
-            if(coins<47){
-                document.getElementById("trollButton").disabled = true;
-                }
-            var trollLoop = setInterval(troll,10);
+</div>        
+    
+<hr>
+<button onclick="aboutFN()">About</button>
+    <script>
+        var info = 0;
+    function aboutFN(){
+        if(info == 0){
+            document.getElementById("infobox").style.display = "block";
+            info = 1;
+        } else {
+            document.getElementById("infobox").style.display = "none";
+            info = 0;
         }
-            
-        function troll(){
-            die++;
-            if(die >= 100){
-                 document.getElementById("bg").style.backgroundColor = "white";
-                clearInterval(trollLoop);
-            }else if(die%2 == 1){
-                document.getElementById("bg").style.backgroundColor = "red";
-            }else{
-                document.getElementById("bg").style.backgroundColor = "blue";
-            }
-        }
-        </script>
-        
+    }
+   
+    </script>
+    <br> <br>
+<div id = "infobox" style = "display: none; border: 1px solid black; width: 70%">
+    send me suggestions but keep in mind i barely know what im doing at all <br> i will ad more nft fo sho so send cool image <br> adding animations and stuff is hard but i can probably do some basic image and gif stuff <br> sounds are easy to add but idk what to add<br><br> send suggestions <a href="https://youtu.be/eJcqkAonACI">here</a>
+    
+</div>
+    
         
         
         <script>updateCoinsDisplay()</script>
